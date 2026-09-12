@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/")({
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const { user, loading, signOut } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -83,20 +85,31 @@ function Navbar() {
             ))}
           </div>
 
-          {/* CTA */}
+          {/* Auth CTA */}
           <div className="flex items-center gap-3">
-            <a
-              href="#pricing"
-              className="hidden text-sm font-medium text-ink transition-opacity hover:opacity-60 sm:block"
-            >
-              Sign in
-            </a>
-            <a
-              href="#pricing"
-              className="cta-sheen rounded-full px-5 py-2.5 text-sm font-semibold text-paper ring-1 ring-gold/40 transition-transform duration-300 hover:-translate-y-0.5"
-            >
-              Get started
-            </a>
+            {!loading && user ? (
+              <button
+                onClick={signOut}
+                className="hidden text-sm font-medium text-ink transition-opacity hover:opacity-60 sm:block"
+              >
+                Sign out
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/signin"
+                  className="hidden text-sm font-medium text-ink transition-opacity hover:opacity-60 sm:block"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="cta-sheen rounded-full px-5 py-2.5 text-sm font-semibold text-paper ring-1 ring-gold/40 transition-transform duration-300 hover:-translate-y-0.5"
+                >
+                  Get started
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </div>
