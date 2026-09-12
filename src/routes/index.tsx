@@ -409,14 +409,19 @@ function FaqSection() {
         <div className="mt-14 space-y-4">
           {faqs.map((f, i) => (
             <Reveal key={f.q} delay={i * 90}>
-              <details className="group rounded-[min(2vw,18px)] bg-white/35 ring-1 ring-black/5 backdrop-blur-xl transition-colors open:bg-white/55">
-                <summary className="flex cursor-pointer list-none items-center justify-between px-7 py-5 font-display text-lg font-medium text-ink [&::-webkit-details-marker]:hidden">
+              <details className="faq-item group rounded-[min(2vw,18px)] bg-white/35 ring-1 ring-black/5 backdrop-blur-xl transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_rgba(23,20,15,0.07)] open:bg-white/60 open:ring-gold/30">
+                <summary className="flex cursor-pointer list-none items-center justify-between px-7 py-5 font-display text-lg font-medium text-ink transition-colors [&::-webkit-details-marker]:hidden">
                   {f.q}
-                  <span className="ml-4 text-gold transition-transform duration-300 group-open:rotate-45" aria-hidden="true">
+                  <span
+                    className="ml-4 flex size-8 shrink-0 items-center justify-center rounded-full bg-gold/15 text-gold transition-all duration-500 group-open:rotate-[225deg] group-open:bg-gold group-open:text-ink"
+                    aria-hidden="true"
+                  >
                     +
                   </span>
                 </summary>
-                <p className="px-7 pb-6 text-sm leading-relaxed text-mute">{f.a}</p>
+                <div className="faq-body overflow-hidden">
+                  <p className="px-7 pb-6 text-sm leading-relaxed text-mute">{f.a}</p>
+                </div>
               </details>
             </Reveal>
           ))}
@@ -427,35 +432,101 @@ function FaqSection() {
 }
 
 function Footer() {
+  const columns = [
+    {
+      title: "Product",
+      links: ["Features", "Showcase", "Pricing", "Changelog"],
+    },
+    {
+      title: "Company",
+      links: ["About", "Journal", "Careers", "Press kit"],
+    },
+    {
+      title: "Support",
+      links: ["Help center", "Status", "Contact", "FAQ"],
+    },
+  ];
+
   return (
-    <footer className="relative px-6 pb-12 pt-20">
+    <footer className="relative px-6 pb-10 pt-24">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <div className="rounded-[min(2.5vw,22px)] bg-ink p-10 text-center ring-1 ring-gold/30 md:p-16">
-            <h2 className="font-display text-[clamp(1.8rem,4.5vw,3rem)] font-medium leading-tight text-paper text-balance">
-              The audience is waiting. <span className="italic text-gold">Raise the lights.</span>
-            </h2>
-            <a
-              href="#pricing"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink transition-transform duration-300 hover:-translate-y-0.5"
-            >
-              Stage your launch
-              <span aria-hidden="true">→</span>
-            </a>
+          <div className="overflow-hidden rounded-[min(2.5vw,22px)] bg-ink text-paper ring-1 ring-gold/30">
+            {/* Top row */}
+            <div className="grid gap-12 p-10 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:p-14">
+              {/* Brand */}
+              <div>
+                <a href="#top" className="group flex items-center gap-2.5">
+                  <span className="flex size-9 items-center justify-center rounded-full bg-gold text-ink transition-transform duration-500 group-hover:rotate-45">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M7 0v14M0 7h14" stroke="currentColor" strokeWidth="1.5" />
+                      <circle cx="7" cy="7" r="2.5" fill="currentColor" />
+                    </svg>
+                  </span>
+                  <span className="font-display text-xl font-semibold tracking-tight">
+                    Northlight
+                  </span>
+                </a>
+                <p className="mt-4 max-w-[32ch] text-sm leading-relaxed text-paper/60">
+                  A launch platform that turns the wait into the moment. Every
+                  release, exactly on cue.
+                </p>
+                <div className="mt-6 flex items-center gap-2">
+                  {["𝕏", "in", "▶"].map((s) => (
+                    <a
+                      key={s}
+                      href="#top"
+                      className="flex size-9 items-center justify-center rounded-full bg-white/10 text-sm text-paper/80 ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-gold hover:text-ink"
+                      aria-label={`Social link ${s}`}
+                    >
+                      {s}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Link columns */}
+              {columns.map((col) => (
+                <div key={col.title}>
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                    {col.title}
+                  </h3>
+                  <ul className="mt-5 space-y-3">
+                    {col.links.map((link) => (
+                      <li key={link}>
+                        <a
+                          href="#top"
+                          className="footer-link relative inline-block text-sm text-paper/70 transition-colors duration-300 hover:text-paper"
+                        >
+                          {link}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom bar */}
+            <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 px-10 py-6 sm:flex-row md:px-14">
+              <p className="text-xs text-paper/50">
+                © 2026 Northlight. Every launch, on cue.
+              </p>
+              <div className="flex items-center gap-6 text-xs text-paper/50">
+                <a href="#top" className="transition-colors hover:text-paper">
+                  Privacy
+                </a>
+                <a href="#top" className="transition-colors hover:text-paper">
+                  Terms
+                </a>
+                <span className="flex items-center gap-2">
+                  <span className="status-dot size-1.5 rounded-full bg-gold" />
+                  All systems on cue
+                </span>
+              </div>
+            </div>
           </div>
         </Reveal>
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-black/5 pt-8 sm:flex-row">
-          <div className="flex items-center gap-2.5">
-            <span className="flex size-6 items-center justify-center rounded-full bg-ink text-paper">
-              <svg width="10" height="10" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M7 0v14M0 7h14" stroke="currentColor" strokeWidth="1.5" />
-                <circle cx="7" cy="7" r="2.5" fill="currentColor" />
-              </svg>
-            </span>
-            <span className="text-sm font-medium text-ink">Northlight</span>
-          </div>
-          <p className="text-xs text-mute">© 2026 Northlight. Every launch, on cue.</p>
-        </div>
       </div>
     </footer>
   );
