@@ -33,7 +33,7 @@ function DashboardAudience() {
 
       <div className="grid gap-5 md:grid-cols-2">
         {/* Audience overview */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-gold/15 text-gold">
               <Users size={20} />
@@ -57,7 +57,7 @@ function DashboardAudience() {
                 </div>
                 <div className="mt-1 h-2 w-full rounded-full bg-black/5">
                   <div
-                    className={`h-full rounded-full ${s.color}`}
+                    className={`bar-fill h-full rounded-full ${s.color}`}
                     style={{ width: s.value }}
                   />
                 </div>
@@ -67,7 +67,7 @@ function DashboardAudience() {
         </div>
 
         {/* Locations */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1" style={{ animationDelay: "80ms" }}>
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-gold/15 text-gold">
               <MapPin size={20} />
@@ -85,7 +85,7 @@ function DashboardAudience() {
               { country: "USA", pct: 22 },
               { country: "UK", pct: 15 },
               { country: "UAE", pct: 10 },
-            ].map((loc) => (
+            ].map((loc, i) => (
               <div key={loc.country}>
                 <div className="flex justify-between text-xs">
                   <span className="text-ink">{loc.country}</span>
@@ -93,8 +93,8 @@ function DashboardAudience() {
                 </div>
                 <div className="mt-1 h-1.5 w-full rounded-full bg-black/5">
                   <div
-                    className="h-full rounded-full bg-ink"
-                    style={{ width: `${loc.pct}%` }}
+                    className="bar-fill h-full rounded-full bg-ink"
+                    style={{ width: `${loc.pct}%`, animationDelay: `${i * 80}ms` }}
                   />
                 </div>
               </div>
@@ -103,7 +103,7 @@ function DashboardAudience() {
         </div>
 
         {/* Devices */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1" style={{ animationDelay: "160ms" }}>
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-gold/15 text-gold">
               <Smartphone size={20} />
@@ -136,7 +136,7 @@ function DashboardAudience() {
         </div>
 
         {/* Engagement */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1" style={{ animationDelay: "240ms" }}>
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-gold/15 text-gold">
               <MessageCircle size={20} />

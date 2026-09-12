@@ -121,7 +121,7 @@ function SignUpPage() {
           <NorthlightLogo />
         </div>
 
-        <div className="mt-10 rounded-[min(2.5vw,24px)] bg-white/50 p-8 ring-1 ring-black/5 backdrop-blur-2xl">
+        <div className="rise-in mt-10 rounded-[min(2.5vw,24px)] bg-white/50 p-8 ring-1 ring-black/5 backdrop-blur-2xl">
           {emailSent ? (
             <div className="text-center">
               <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-gold/15 text-gold">

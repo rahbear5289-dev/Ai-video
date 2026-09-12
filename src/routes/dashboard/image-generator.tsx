@@ -55,7 +55,7 @@ function ImageGenerator() {
         {images.map((img, i) => (
           <div
             key={img.id}
-            className="group overflow-hidden rounded-[min(2vw,16px)] border border-black/5 bg-white/60 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            className="stagger-in media-zoom group overflow-hidden rounded-[min(2vw,16px)] border border-black/5 bg-white/60 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             style={{ animationDelay: `${i * 80}ms` }}
           >
             <div className="aspect-video bg-gradient-to-br from-gold/20 via-ink/5 to-purple-100" />

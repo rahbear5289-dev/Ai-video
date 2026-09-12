@@ -38,11 +38,12 @@ function AIChatting() {
               className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[70%] rounded-2xl px-4 py-3 ${
+                className={`chat-in max-w-[70%] rounded-2xl px-4 py-3 ${
                   msg.from === "user"
                     ? "bg-ink text-paper"
                     : "bg-white/80 text-ink ring-1 ring-black/5"
                 }`}
+                style={{ animationDelay: `${i * 90}ms` }}
               >
                 <div className="flex items-center gap-2 mb-1">
                   {msg.from === "ai" ? (

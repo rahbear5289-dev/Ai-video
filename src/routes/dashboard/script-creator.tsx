@@ -43,7 +43,7 @@ function ScriptCreator() {
         ].map((item, i) => (
           <div
             key={item.title}
-            className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1"
+            className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1"
             style={{ animationDelay: `${i * 100}ms` }}
           >
             <div className="flex size-10 items-center justify-center rounded-full bg-gold/15 text-gold">
@@ -73,10 +73,11 @@ function ScriptCreator() {
         </div>
         <div className="mt-4 space-y-2">
           {["Scene 1: Hook — 15s", "Scene 2: Problem — 20s", "Scene 3: Solution — 30s"].map(
-            (scene) => (
+            (scene, i) => (
               <div
                 key={scene}
-                className="flex items-center justify-between rounded-lg bg-black/[0.03] px-4 py-3"
+                className="row-in flex items-center justify-between rounded-lg bg-black/[0.03] px-4 py-3 transition-all duration-300 hover:bg-black/[0.06]"
+                style={{ animationDelay: `${i * 80}ms` }}
               >
                 <span className="text-sm text-ink">{scene}</span>
                 <span className="text-xs text-gold"> AI</span>

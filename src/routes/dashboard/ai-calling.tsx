@@ -36,10 +36,11 @@ function AICalling() {
           { icon: PhoneOutgoing, label: "Make Call", desc: "Call anyone", color: "bg-ink text-paper" },
           { icon: PhoneIncoming, label: "Receive", desc: "AI answers", color: "bg-gold text-ink" },
           { icon: Voicemail, label: "Voicemail", desc: "AI leaves message", color: "bg-emerald-500/15 text-emerald-600" },
-        ].map((item) => (
+        ].map((item, i) => (
           <button
             key={item.label}
-            className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 text-center backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80"
+            className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 text-center backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80"
+            style={{ animationDelay: `${i * 80}ms` }}
           >
             <div className={`mx-auto flex size-12 items-center justify-center rounded-full ${item.color}`}>
               <item.icon size={22} />
@@ -58,10 +59,11 @@ function AICalling() {
           Call History
         </h3>
         <div className="mt-4 space-y-2">
-          {calls.map((call) => (
+          {calls.map((call, i) => (
             <div
               key={call.name}
-              className="flex items-center justify-between rounded-lg bg-black/[0.03] px-4 py-3"
+              className="row-in flex items-center justify-between rounded-lg bg-black/[0.03] px-4 py-3 transition-all duration-300 hover:bg-black/[0.06]"
+              style={{ animationDelay: `${i * 70}ms` }}
             >
               <div className="flex items-center gap-3">
                 <div className={`flex size-8 items-center justify-center rounded-full ${

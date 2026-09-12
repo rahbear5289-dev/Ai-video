@@ -49,7 +49,7 @@ function DashboardLaunches() {
         {launches.map((launch, i) => (
           <div
             key={launch.name}
-            className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80 hover:shadow-lg"
+            className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80 hover:shadow-lg"
             style={{ animationDelay: `${i * 80}ms` }}
           >
             <div className="flex items-start justify-between">

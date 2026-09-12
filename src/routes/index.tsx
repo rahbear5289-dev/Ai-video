@@ -86,7 +86,7 @@ function Navbar() {
               <a
                 key={label}
                 href={href}
-                className="rounded-full px-4 py-2 text-sm font-medium text-mute transition-colors duration-300 hover:bg-black/5 hover:text-ink"
+                className="rounded-full px-4 py-2 text-sm font-medium text-mute transition-all duration-300 hover:bg-black/5 hover:text-ink hover:-translate-y-0.5"
               >
                 {label}
               </a>
@@ -606,15 +606,6 @@ function Hero() {
       {/* Content */}
       <div className="relative mx-auto flex max-w-6xl flex-col items-center justify-start px-6 pt-1 pb-20 text-center">
         {/* Eyebrow */}
-        <div
-          className="hero-anim mb-8 flex items-center gap-3 rounded-full bg-white/50 px-4 py-1.5 ring-1 ring-black/5 backdrop-blur-md"
-          style={{ animationDelay: "0.05s" }}
-        >
-          <span className="size-1.5 rounded-full bg-gold" />
-          <span className="text-xs font-medium uppercase tracking-[0.22em] text-mute">
-            Introducing Northlight 2.0
-          </span>
-        </div>
 
         {/* Headline */}
         <h1

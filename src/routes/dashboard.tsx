@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   BarChart3,
   Calendar,
@@ -99,8 +99,8 @@ function DashboardLayout() {
     <div className="flex min-h-screen bg-paper font-body">
       {/* Desktop Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-black/5 bg-white/60 backdrop-blur-xl md:flex ${
-          sidebarOpen ? "" : "w-20"
+        className={`dash-sidebar fixed inset-y-0 left-0 z-40 hidden flex-col border-r border-black/5 bg-white/60 backdrop-blur-xl md:flex ${
+          sidebarOpen ? "w-64" : "w-20"
         }`}
       >
         <div className="flex h-16 items-center border-b border-black/5 px-4">
@@ -119,7 +119,7 @@ function DashboardLayout() {
           )}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="ml-auto rounded-lg p-1.5 text-mute transition-colors hover:bg-black/5 hover:text-ink"
+            className="ml-auto rounded-lg p-1.5 text-mute transition-all duration-300 hover:bg-black/5 hover:text-ink hover:rotate-180"
           >
             {sidebarOpen ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
           </button>
@@ -157,11 +157,11 @@ function DashboardLayout() {
       {/* Mobile Sidebar Overlay */}
       {mobileSidebarOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black/20 backdrop-blur-sm md:hidden"
+          className="mobile-overlay fixed inset-0 z-30 bg-black/20 backdrop-blur-sm md:hidden"
           onClick={() => setMobileSidebarOpen(false)}
         >
           <aside
-            className="absolute left-0 top-0 h-full w-64 bg-white/95 backdrop-blur-xl"
+            className="mobile-drawer absolute left-0 top-0 h-full w-64 bg-white/95 backdrop-blur-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex h-16 items-center justify-between border-b border-black/5 px-4">
@@ -206,9 +206,9 @@ function DashboardLayout() {
       )}
 
       {/* Main Content */}
-      <div className="flex flex-1 flex-col md:ml-64">
+      <div className={`dash-main flex flex-1 flex-col ${sidebarOpen ? "md:ml-64" : "md:ml-20"}`}>
         {/* Top Bar */}
-        <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-black/5 bg-paper/80 px-6 backdrop-blur-xl">
+        <header className="dash-header sticky top-0 z-20 flex h-16 items-center justify-between border-b border-black/5 bg-paper/80 px-6 backdrop-blur-xl">
           <div className="flex items-center gap-3 md:hidden">
             <button
               onClick={() => setMobileSidebarOpen(true)}
@@ -246,7 +246,9 @@ function DashboardLayout() {
 
         {/* Page Content */}
         <main className="flex-1 p-6">
-          <Outlet />
+          <div key={location.pathname} className="page-enter">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>
@@ -287,10 +289,14 @@ export function DashboardStats() {
 
   return (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {stats.map((stat) => {
+      {stats.map((stat, index) => {
         const Icon = stat.icon;
         return (
-          <Card key={stat.label} className="rounded-[min(2vw,18px)] border-black/5 bg-white/60 backdrop-blur-xl">
+          <Card
+            key={stat.label}
+            className="stat-card rounded-[min(2vw,18px)] border-black/5 bg-white/60 backdrop-blur-xl"
+            style={{ animationDelay: `${index * 90}ms` }}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-xs font-medium uppercase tracking-wider text-mute">
                 {stat.label}
@@ -348,8 +354,12 @@ export function RecentLaunches() {
               </tr>
             </thead>
             <tbody>
-              {launches.map((launch) => (
-                <tr key={launch.name} className="border-b border-black/5 last:border-0">
+              {launches.map((launch, i) => (
+                <tr
+                  key={launch.name}
+                  className="row-in border-b border-black/5 last:border-0"
+                  style={{ animationDelay: `${i * 70}ms` }}
+                >
                   <td className="py-3 font-medium text-ink">{launch.name}</td>
                   <td className="py-3">
                     <span

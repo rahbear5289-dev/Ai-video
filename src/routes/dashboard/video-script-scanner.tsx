@@ -24,7 +24,7 @@ function VideoScriptScanner() {
       </div>
 
       {/* Upload area */}
-      <div className="rounded-[min(2vw,18px)] border-2 border-dashed border-black/10 bg-white/40 p-12 text-center backdrop-blur-xl transition-colors hover:bg-white/60">
+      <div className="stagger-in rounded-[min(2vw,18px)] border-2 border-dashed border-black/10 bg-white/40 p-12 text-center backdrop-blur-xl transition-all duration-300 hover:bg-white/60 hover:-translate-y-0.5">
         <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-gold/15">
           <ScanLine size={28} className="text-gold" />
         </div>
@@ -46,10 +46,11 @@ function VideoScriptScanner() {
           { icon: CheckCircle2, label: "Pacing", value: "92%", color: "text-emerald-500" },
           { icon: AlertCircle, label: "Engagement", value: "78%", color: "text-gold" },
           { icon: FileVideo, label: "Word Count", value: "342", color: "text-ink" },
-        ].map((item) => (
+        ].map((item, i) => (
           <div
             key={item.label}
-            className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-5 backdrop-blur-xl"
+            className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1"
+            style={{ animationDelay: `${i * 80}ms` }}
           >
             <div className="flex items-center gap-2">
               <item.icon size={16} className={item.color} />

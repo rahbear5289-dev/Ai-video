@@ -37,7 +37,7 @@ function DashboardSettings() {
 
       <div className="grid gap-5 md:grid-cols-2">
         {/* Profile */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-gold/15 text-gold">
               <User size={20} />
@@ -68,7 +68,7 @@ function DashboardSettings() {
         </div>
 
         {/* Appearance */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1" style={{ animationDelay: "80ms" }}>
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-gold/15 text-gold">
               <Palette size={20} />
@@ -109,7 +109,7 @@ function DashboardSettings() {
         </div>
 
         {/* Notifications */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1" style={{ animationDelay: "160ms" }}>
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-gold/15 text-gold">
               <Bell size={20} />
@@ -140,7 +140,7 @@ function DashboardSettings() {
         </div>
 
         {/* Security */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1" style={{ animationDelay: "240ms" }}>
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-gold/15 text-gold">
               <Shield size={20} />

@@ -30,7 +30,7 @@ function VideoCreator() {
         ].map((item, i) => (
           <div
             key={item.title}
-            className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-8 text-center backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80"
+            className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-8 text-center backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80"
             style={{ animationDelay: `${i * 100}ms` }}
           >
             <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-gold/15 text-3xl">
@@ -52,10 +52,11 @@ function VideoCreator() {
           Recent Projects
         </h3>
         <div className="mt-4 space-y-3">
-          {["Product Demo", "Brand Story", "Launch Teaser"].map((name) => (
+          {["Product Demo", "Brand Story", "Launch Teaser"].map((name, i) => (
             <div
               key={name}
-              className="flex items-center justify-between rounded-lg bg-black/[0.03] px-4 py-3"
+              className="flex items-center justify-between rounded-lg bg-black/[0.03] px-4 py-3 row-in transition-all duration-300 hover:bg-black/[0.06]"
+              style={{ animationDelay: `${i * 80}ms` }}
             >
               <span className="text-sm font-medium text-ink">{name}</span>
               <span className="text-xs text-gold"> editing</span>

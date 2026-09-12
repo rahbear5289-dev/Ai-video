@@ -43,7 +43,7 @@ function Gallery() {
         {items.map((item, i) => (
           <div
             key={item.id}
-            className="group relative overflow-hidden rounded-[min(2vw,16px)] border border-black/5 bg-white/60 aspect-video backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            className="stagger-in media-zoom group relative overflow-hidden rounded-[min(2vw,16px)] border border-black/5 bg-white/60 aspect-video backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             style={{ animationDelay: `${i * 80}ms` }}
           >
             <div className={`h-full ${

@@ -47,10 +47,11 @@ function Token() {
           { icon: Activity, label: "Used Today", value: "342" },
           { icon: CreditCard, label: "This Month", value: "4.2K" },
           { icon: Wallet, label: "Last Month", value: "3.8K" },
-        ].map((item) => (
+        ].map((item, i) => (
           <div
             key={item.label}
-            className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-5 backdrop-blur-xl"
+            className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1"
+            style={{ animationDelay: `${i * 80}ms` }}
           >
             <div className="flex items-center gap-2">
               <item.icon size={16} className="text-gold" />
@@ -69,7 +70,7 @@ function Token() {
           Monthly Usage
         </h3>
         <div className="mt-4 h-3 w-full rounded-full bg-black/5">
-          <div className="h-full rounded-full bg-gradient-to-r from-gold to-ink" style={{ width: "68%" }} />
+          <div className="bar-fill h-full rounded-full bg-gradient-to-r from-gold to-ink" style={{ width: "68%" }} />
         </div>
         <div className="mt-2 flex justify-between text-xs text-mute">
           <span>6,800 / 10,000 tokens</span>

@@ -26,7 +26,7 @@ function VideoEditor() {
       {/* Editor layout */}
       <div className="grid gap-4 lg:grid-cols-4">
         {/* Tools sidebar */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-4 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-4 backdrop-blur-xl">
           <h3 className="mb-3 font-display text-sm font-semibold text-ink">
             Tools
           </h3>
@@ -49,7 +49,7 @@ function VideoEditor() {
         </div>
 
         {/* Preview */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 stagger-in" style={{ animationDelay: "80ms" }}>
           <div className="rounded-[min(2vw,18px)] border border-black/5 bg-black/5 p-4 backdrop-blur-xl">
             <div className="flex aspect-video items-center justify-center rounded-xl bg-gradient-to-br from-gold/20 to-ink/10">
               <Play size={48} className="text-gold/40" />
@@ -61,7 +61,7 @@ function VideoEditor() {
         </div>
 
         {/* Properties */}
-        <div className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-4 backdrop-blur-xl">
+        <div className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-4 backdrop-blur-xl" style={{ animationDelay: "160ms" }}>
           <h3 className="mb-3 font-display text-sm font-semibold text-ink">
             Properties
           </h3>

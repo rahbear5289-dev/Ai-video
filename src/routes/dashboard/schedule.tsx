@@ -68,7 +68,7 @@ function DashboardSchedule() {
             return (
               <span
                 key={d}
-                className={`rounded-lg py-2 transition-colors ${
+                className={`rounded-lg py-2 transition-all duration-300 hover:scale-110 ${
                   d === 15
                     ? "bg-gold text-ink font-semibold"
                     : hasEvent
@@ -92,7 +92,7 @@ function DashboardSchedule() {
           {events.map((event, i) => (
             <div
               key={event.name}
-              className="flex items-center justify-between rounded-xl bg-black/[0.03] px-4 py-3 transition-all hover:bg-black/[0.06]"
+              className="row-in flex items-center justify-between rounded-xl bg-black/[0.03] px-4 py-3 transition-all hover:bg-black/[0.06]"
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="flex items-center gap-3">

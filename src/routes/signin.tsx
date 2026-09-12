@@ -104,7 +104,7 @@ function SignInPage() {
           <NorthlightLogo />
         </div>
 
-        <div className="mt-10 rounded-[min(2.5vw,24px)] bg-white/50 p-8 ring-1 ring-black/5 backdrop-blur-2xl">
+        <div className="rise-in mt-10 rounded-[min(2.5vw,24px)] bg-white/50 p-8 ring-1 ring-black/5 backdrop-blur-2xl">
           <h1 className="font-display text-3xl font-medium tracking-tight text-ink">Welcome back</h1>
           <p className="mt-2 text-sm text-mute">Sign in to continue staging your launch.</p>
 
@@ -121,7 +121,8 @@ function SignInPage() {
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-2xl bg-white/60 px-4 py-3 text-sm text-ink ring-1 ring-black/10 placeholder:text-mute/60 focus:outline-none focus:ring-2 focus:ring-gold/60"
+                className="auth-field w-full rounded-2xl bg-white/60 px-4 py-3 text-sm text-ink ring-1 ring-black/10 placeholder:text-mute/60 focus:outline-none focus:ring-2 focus:ring-gold/60"
+                style={{ animationDelay: "80ms" }}
               />
             </div>
             <div>
@@ -136,7 +137,8 @@ function SignInPage() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-2xl bg-white/60 px-4 py-3 text-sm text-ink ring-1 ring-black/10 placeholder:text-mute/60 focus:outline-none focus:ring-2 focus:ring-gold/60"
+                className="auth-field w-full rounded-2xl bg-white/60 px-4 py-3 text-sm text-ink ring-1 ring-black/10 placeholder:text-mute/60 focus:outline-none focus:ring-2 focus:ring-gold/60"
+                style={{ animationDelay: "140ms" }}
               />
             </div>
             <button

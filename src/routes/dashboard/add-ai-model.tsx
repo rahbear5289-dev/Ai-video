@@ -35,7 +35,7 @@ function AddAIModel() {
         {models.map((model, i) => (
           <div
             key={model.name}
-            className="flex items-center justify-between rounded-[min(2vw,14px)] border border-black/5 bg-white/60 p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5"
+            className="stagger-in flex items-center justify-between rounded-[min(2vw,14px)] border border-black/5 bg-white/60 p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5"
             style={{ animationDelay: `${i * 80}ms` }}
           >
             <div className="flex items-center gap-4">

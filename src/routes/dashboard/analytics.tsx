@@ -44,7 +44,7 @@ function DashboardAnalytics() {
           return (
             <div
               key={m.label}
-              className="rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1"
+              className="stagger-in rounded-[min(2vw,18px)] border border-black/5 bg-white/60 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1"
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="flex items-center justify-between">
@@ -86,7 +86,7 @@ function DashboardAnalytics() {
           {[40, 65, 50, 80, 55, 90, 70, 100, 75, 85, 60, 95].map((h, i) => (
             <div
               key={i}
-              className="flex-1 rounded-t-lg bg-gold/30 transition-all duration-500 hover:bg-gold/50"
+              className="chart-bar flex-1 rounded-t-lg bg-gold/30 transition-all duration-500 hover:bg-gold/50"
               style={{
                 height: `${h}%`,
                 animationDelay: `${i * 50}ms`,
@@ -110,7 +110,8 @@ function DashboardAnalytics() {
           {["Aurora Frames", "Morrow Press", "Quiet Signal"].map((name, i) => (
             <div
               key={name}
-              className="flex items-center justify-between rounded-lg bg-black/[0.03] px-4 py-3"
+              className="row-in flex items-center justify-between rounded-lg bg-black/[0.03] px-4 py-3 transition-all duration-300 hover:bg-black/[0.06]"
+              style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="flex items-center gap-3">
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-ink text-xs font-bold text-paper">

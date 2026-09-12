@@ -72,7 +72,7 @@ function DashboardOverview() {
               <Link
                 key={page.label}
                 to={page.to}
-                className="group flex items-center gap-3 rounded-[min(2vw,14px)] border border-black/5 bg-white/60 p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80 hover:shadow-lg"
+                className="stagger-in group flex items-center gap-3 rounded-[min(2vw,14px)] border border-black/5 bg-white/60 p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80 hover:shadow-lg"
                 style={{ animationDelay: `${i * 50}ms` }}
                 viewTransition
               >
