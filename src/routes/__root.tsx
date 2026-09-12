@@ -15,6 +15,14 @@ import { AuthProvider } from "@/lib/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 
+function loadTidioScript() {
+  if (document.querySelector('script[src*="tidio.co"]')) return;
+  const script = document.createElement("script");
+  script.src = "//code.tidio.co/bq2jhmodymom1jluq8lhxly4vcctupnr.js";
+  script.async = true;
+  document.body.appendChild(script);
+}
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -110,6 +118,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    loadTidioScript();
+  }, []);
+
   return (
     <html lang="en">
       <head>

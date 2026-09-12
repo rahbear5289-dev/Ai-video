@@ -67,7 +67,7 @@ function SignUpPage() {
 
   useEffect(() => {
     if (!authLoading && user) {
-      navigate({ to: "/", replace: true });
+      navigate({ to: "/dashboard", replace: true });
     }
   }, [authLoading, user, navigate]);
 
@@ -113,7 +113,7 @@ function SignUpPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/", replace: true });
+    navigate({ to: "/dashboard", replace: true });
   };
 
   if (authLoading) {

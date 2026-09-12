@@ -65,7 +65,7 @@ function SignInPage() {
 
   useEffect(() => {
     if (!authLoading && user) {
-      navigate({ to: "/", replace: true });
+      navigate({ to: "/dashboard", replace: true });
     }
   }, [authLoading, user, navigate]);
 
@@ -82,7 +82,7 @@ function SignInPage() {
       toast.error(error.message);
       return;
     }
-    navigate({ to: "/", replace: true });
+    navigate({ to: "/dashboard", replace: true });
   };
 
   const handleGoogleSignIn = async () => {
@@ -96,7 +96,7 @@ function SignInPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/", replace: true });
+    navigate({ to: "/dashboard", replace: true });
   };
 
   if (authLoading) {

@@ -31,21 +31,29 @@ export const Route = createFileRoute("/")({
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { user, loading, signOut } = useAuth();
 
   useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 100);
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled ? "py-3" : "py-6"
-      }`}
+      } ${mounted ? "navbar-anim navbar-glow" : "opacity-0"}`}
     >
+      {mounted && (
+        <div className="navbar-beam pointer-events-none absolute inset-0 overflow-hidden rounded-full bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+      )}
       <div className="mx-auto max-w-6xl px-6">
         <nav
           className={`flex items-center justify-between rounded-full px-5 py-2.5 transition-all duration-500 ${
@@ -88,12 +96,20 @@ function Navbar() {
           {/* Auth CTA */}
           <div className="flex items-center gap-3">
             {!loading && user ? (
-              <button
-                onClick={signOut}
-                className="hidden text-sm font-medium text-ink transition-opacity hover:opacity-60 sm:block"
-              >
-                Sign out
-              </button>
+              <>
+                <Link
+                  to="/dashboard"
+                  className="hidden rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper transition-opacity hover:opacity-80 sm:block"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={signOut}
+                  className="hidden text-sm font-medium text-ink transition-opacity hover:opacity-60 sm:block"
+                >
+                  Sign out
+                </button>
+              </>
             ) : (
               <>
                 <Link
@@ -588,7 +604,7 @@ function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-24 text-center">
+      <div className="relative mx-auto flex max-w-6xl flex-col items-center justify-start px-6 pt-1 pb-20 text-center">
         {/* Eyebrow */}
         <div
           className="hero-anim mb-8 flex items-center gap-3 rounded-full bg-white/50 px-4 py-1.5 ring-1 ring-black/5 backdrop-blur-md"
