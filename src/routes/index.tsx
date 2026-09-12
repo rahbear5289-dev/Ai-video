@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export const Route = createFileRoute("/")({
-  component: Hero,
+  component: HomePage,
   head: () => ({
     meta: [
       {
@@ -27,9 +28,442 @@ export const Route = createFileRoute("/")({
   }),
 });
 
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scrolled ? "py-3" : "py-6"
+      }`}
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <nav
+          className={`flex items-center justify-between rounded-full px-5 py-2.5 transition-all duration-500 ${
+            scrolled
+              ? "bg-white/60 shadow-[0_8px_30px_rgba(23,20,15,0.08)] ring-1 ring-black/5 backdrop-blur-2xl"
+              : "bg-transparent"
+          }`}
+        >
+          {/* Logo */}
+          <a href="#top" className="group flex items-center gap-2.5">
+            <span className="flex size-8 items-center justify-center rounded-full bg-ink text-paper transition-transform duration-300 group-hover:rotate-45">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M7 0v14M0 7h14" stroke="currentColor" strokeWidth="1.5" />
+                <circle cx="7" cy="7" r="2.5" fill="currentColor" />
+              </svg>
+            </span>
+            <span className="font-display text-lg font-semibold tracking-tight text-ink">
+              Northlight
+            </span>
+          </a>
+
+          {/* Links */}
+          <div className="hidden items-center gap-1 md:flex">
+            {[
+              ["Features", "#features"],
+              ["Showcase", "#showcase"],
+              ["Pricing", "#pricing"],
+              ["FAQ", "#faq"],
+            ].map(([label, href]) => (
+              <a
+                key={label}
+                href={href}
+                className="rounded-full px-4 py-2 text-sm font-medium text-mute transition-colors duration-300 hover:bg-black/5 hover:text-ink"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="flex items-center gap-3">
+            <a
+              href="#pricing"
+              className="hidden text-sm font-medium text-ink transition-opacity hover:opacity-60 sm:block"
+            >
+              Sign in
+            </a>
+            <a
+              href="#pricing"
+              className="cta-sheen rounded-full px-5 py-2.5 text-sm font-semibold text-paper ring-1 ring-gold/40 transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              Get started
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.18 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`${className} transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        visible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function SectionHeading({
+  eyebrow,
+  title,
+  sub,
+}: {
+  eyebrow: string;
+  title: ReactNode;
+  sub: string;
+}) {
+  return (
+    <div className="mx-auto max-w-2xl text-center">
+      <Reveal>
+        <div className="inline-flex items-center gap-3 rounded-full bg-white/50 px-4 py-1.5 ring-1 ring-black/5 backdrop-blur-md">
+          <span className="size-1.5 rounded-full bg-gold" />
+          <span className="text-xs font-medium uppercase tracking-[0.22em] text-mute">
+            {eyebrow}
+          </span>
+        </div>
+      </Reveal>
+      <Reveal delay={120}>
+        <h2 className="mt-6 font-display text-[clamp(2rem,5vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.02em] text-ink text-balance">
+          {title}
+        </h2>
+      </Reveal>
+      <Reveal delay={220}>
+        <p className="mt-5 text-base leading-relaxed text-mute sm:text-lg">{sub}</p>
+      </Reveal>
+    </div>
+  );
+}
+
+function FeaturesSection() {
+  const features = [
+    {
+      icon: "◉",
+      title: "Timed spotlight",
+      text: "Schedule your reveal down to the second. The stage lights rise exactly when your audience is watching.",
+    },
+    {
+      icon: "◧",
+      title: "Cinematic pages",
+      text: "Launch pages that feel like title sequences — typography, motion, and sound composed into one moment.",
+    },
+    {
+      icon: "◔",
+      title: "Live anticipation",
+      text: "Countdown rooms, waitlists, and whisper campaigns. Build tension before the curtain lifts.",
+    },
+    {
+      icon: "◫",
+      title: "Reveal analytics",
+      text: "Watch the spike as it happens. Every view, share, and conversion measured from first light.",
+    },
+  ];
+
+  return (
+    <section id="features" className="relative px-6 py-28">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          eyebrow="Features"
+          title={
+            <>
+              Everything the launch needs, <span className="italic text-gold">nothing it doesn't.</span>
+            </>
+          }
+          sub="Four instruments, tuned to a single performance. No clutter backstage."
+        />
+        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {features.map((f, i) => (
+            <Reveal key={f.title} delay={i * 110}>
+              <div className="group h-full rounded-[min(2.5vw,22px)] bg-white/35 p-7 ring-1 ring-black/5 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:bg-white/55 hover:shadow-[0_20px_50px_rgba(23,20,15,0.08)]">
+                <div className="flex size-11 items-center justify-center rounded-full bg-gold/15 text-lg text-gold transition-transform duration-500 group-hover:scale-110">
+                  <span aria-hidden="true">{f.icon}</span>
+                </div>
+                <h3 className="mt-5 font-display text-xl font-medium text-ink">{f.title}</h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-mute">{f.text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ShowcaseSection() {
+  return (
+    <section id="showcase" className="relative px-6 py-28">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          eyebrow="Showcase"
+          title={
+            <>
+              Launches that <span className="italic text-gold">owned the light.</span>
+            </>
+          }
+          sub="A few of the moments staged on Northlight — each one landing on cue."
+        />
+        <div className="mt-16 grid gap-5 md:grid-cols-3">
+          {[
+            {
+              name: "Aurora Frames",
+              tag: "Hardware · 214k viewers",
+              grad: "from-[oklch(0.82_0.1_80)] to-[oklch(0.6_0.13_60)]",
+              big: true,
+            },
+            {
+              name: "Quiet Signal",
+              tag: "App · 96k viewers",
+              grad: "from-[oklch(0.88_0.05_95)] to-[oklch(0.72_0.09_85)]",
+            },
+            {
+              name: "Morrow Press",
+              tag: "Editorial · 58k viewers",
+              grad: "from-[oklch(0.8_0.06_70)] to-[oklch(0.55_0.1_75)]",
+            },
+          ].map((c, i) => (
+            <Reveal key={c.name} delay={i * 130} className={c.big ? "md:row-span-1" : ""}>
+              <a
+                href="#showcase"
+                className="group relative block h-72 overflow-hidden rounded-[min(2.5vw,22px)] ring-1 ring-black/5 md:h-80"
+              >
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${c.grad} transition-transform duration-700 group-hover:scale-105`}
+                />
+                <div className="floaty absolute right-6 top-6 h-16 w-16 rounded-2xl bg-white/40 ring-1 ring-black/5 backdrop-blur-xl" style={{ animationDelay: `${i * -2}s` }} />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/30 to-transparent p-6 pt-16">
+                  <div className="font-display text-2xl font-medium text-white">{c.name}</div>
+                  <div className="mt-1 text-xs uppercase tracking-[0.14em] text-white/80">
+                    {c.tag}
+                  </div>
+                </div>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PricingSection() {
+  const plans = [
+    {
+      name: "Rehearsal",
+      price: "$0",
+      note: "For the first dress run",
+      items: ["1 staged launch", "Countdown room", "Basic analytics"],
+      featured: false,
+    },
+    {
+      name: "Opening Night",
+      price: "$49",
+      note: "Per launch, fully lit",
+      items: ["Cinematic launch pages", "Live anticipation tools", "Reveal analytics", "Priority spotlight"],
+      featured: true,
+    },
+    {
+      name: "Residency",
+      price: "$299",
+      note: "Monthly, unlimited stages",
+      items: ["Unlimited launches", "Custom domains", "Team backstage", "Dedicated showrunner"],
+      featured: false,
+    },
+  ];
+
+  return (
+    <section id="pricing" className="relative px-6 py-28">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          eyebrow="Pricing"
+          title={
+            <>
+              Pick your <span className="italic text-gold">seat in the house.</span>
+            </>
+          }
+          sub="Start free in the rehearsal room. Upgrade when the lights matter."
+        />
+        <div className="mt-16 grid gap-5 md:grid-cols-3">
+          {plans.map((p, i) => (
+            <Reveal key={p.name} delay={i * 120}>
+              <div
+                className={`relative h-full rounded-[min(2.5vw,22px)] p-8 ring-1 transition-transform duration-500 hover:-translate-y-1.5 ${
+                  p.featured
+                    ? "bg-ink text-paper ring-gold/40 shadow-[0_24px_60px_rgba(23,20,15,0.22)]"
+                    : "bg-white/35 ring-black/5 backdrop-blur-xl"
+                }`}
+              >
+                {p.featured && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink">
+                    Most staged
+                  </span>
+                )}
+                <h3 className={`font-display text-lg font-medium ${p.featured ? "text-paper" : "text-ink"}`}>
+                  {p.name}
+                </h3>
+                <div className="mt-4 flex items-baseline gap-2">
+                  <span className={`font-display text-5xl font-medium ${p.featured ? "text-paper" : "text-ink"}`}>
+                    {p.price}
+                  </span>
+                </div>
+                <p className={`mt-1 text-sm ${p.featured ? "text-paper/70" : "text-mute"}`}>{p.note}</p>
+                <ul className="mt-6 space-y-2.5">
+                  {p.items.map((item) => (
+                    <li key={item} className={`flex items-center gap-2.5 text-sm ${p.featured ? "text-paper/85" : "text-mute"}`}>
+                      <span className="text-gold" aria-hidden="true">✦</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="#pricing"
+                  className={`mt-8 block rounded-full py-3 text-center text-sm font-semibold transition-transform duration-300 hover:-translate-y-0.5 ${
+                    p.featured
+                      ? "bg-gold text-ink"
+                      : "bg-ink text-paper"
+                  }`}
+                >
+                  Choose {p.name}
+                </a>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FaqSection() {
+  const faqs = [
+    {
+      q: "How fast can I stage a launch?",
+      a: "Most teams go from blank stage to scheduled reveal in under an hour. Templates handle the composition; you bring the moment.",
+    },
+    {
+      q: "Can I rehearse before opening night?",
+      a: "Yes — every launch gets a private rehearsal mode. Preview the full reveal, timing included, with your team before anyone else sees it.",
+    },
+    {
+      q: "What happens if something goes wrong on cue?",
+      a: "99.98% on-cue uptime, plus an automatic hold: if a dependency fails, the stage waits instead of showing a broken scene.",
+    },
+    {
+      q: "Do you support custom domains?",
+      a: "On Residency, yes. Your reveal lives on your stage, with your name on the marquee.",
+    },
+  ];
+
+  return (
+    <section id="faq" className="relative px-6 py-28">
+      <div className="mx-auto max-w-3xl">
+        <SectionHeading
+          eyebrow="FAQ"
+          title={
+            <>
+              Questions from <span className="italic text-gold">backstage.</span>
+            </>
+          }
+          sub="Everything people ask before the curtain rises."
+        />
+        <div className="mt-14 space-y-4">
+          {faqs.map((f, i) => (
+            <Reveal key={f.q} delay={i * 90}>
+              <details className="group rounded-[min(2vw,18px)] bg-white/35 ring-1 ring-black/5 backdrop-blur-xl transition-colors open:bg-white/55">
+                <summary className="flex cursor-pointer list-none items-center justify-between px-7 py-5 font-display text-lg font-medium text-ink [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <span className="ml-4 text-gold transition-transform duration-300 group-open:rotate-45" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
+                <p className="px-7 pb-6 text-sm leading-relaxed text-mute">{f.a}</p>
+              </details>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="relative px-6 pb-12 pt-20">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <div className="rounded-[min(2.5vw,22px)] bg-ink p-10 text-center ring-1 ring-gold/30 md:p-16">
+            <h2 className="font-display text-[clamp(1.8rem,4.5vw,3rem)] font-medium leading-tight text-paper text-balance">
+              The audience is waiting. <span className="italic text-gold">Raise the lights.</span>
+            </h2>
+            <a
+              href="#pricing"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              Stage your launch
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </Reveal>
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-black/5 pt-8 sm:flex-row">
+          <div className="flex items-center gap-2.5">
+            <span className="flex size-6 items-center justify-center rounded-full bg-ink text-paper">
+              <svg width="10" height="10" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M7 0v14M0 7h14" stroke="currentColor" strokeWidth="1.5" />
+                <circle cx="7" cy="7" r="2.5" fill="currentColor" />
+              </svg>
+            </span>
+            <span className="text-sm font-medium text-ink">Northlight</span>
+          </div>
+          <p className="text-xs text-mute">© 2026 Northlight. Every launch, on cue.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 function Hero() {
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-paper font-body">
+    <section id="top" className="relative min-h-screen w-full overflow-hidden">
       {/* Ambient background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
@@ -109,7 +543,7 @@ function Hero() {
           style={{ animationDelay: "0.5s" }}
         >
           <a
-            href="#"
+            href="#pricing"
             className="cta-sheen group inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-paper ring-1 ring-gold/40 transition-transform duration-300 hover:-translate-y-0.5"
           >
             See the reveal
@@ -121,7 +555,7 @@ function Hero() {
             </span>
           </a>
           <a
-            href="#"
+            href="#showcase"
             className="group inline-flex items-center gap-2 rounded-full bg-white/40 px-6 py-3.5 text-sm font-medium text-ink ring-1 ring-black/5 backdrop-blur-md transition-transform duration-300 hover:-translate-y-0.5"
           >
             <span aria-hidden="true">◷</span>
@@ -156,6 +590,30 @@ function Hero() {
           </div>
         </div>
       </div>
+
+      {/* Scroll hint */}
+      <a
+        href="#features"
+        className="hero-anim absolute bottom-8 left-1/2 -translate-x-1/2 text-mute transition-colors hover:text-ink"
+        style={{ animationDelay: "1s" }}
+        aria-label="Scroll to features"
+      >
+        <div className="scroll-hint mx-auto h-10 w-6 rounded-full ring-1 ring-black/10" />
+      </a>
+    </section>
+  );
+}
+
+function HomePage() {
+  return (
+    <main className="relative min-h-screen w-full overflow-x-clip bg-paper font-body">
+      <Navbar />
+      <Hero />
+      <FeaturesSection />
+      <ShowcaseSection />
+      <PricingSection />
+      <FaqSection />
+      <Footer />
     </main>
   );
 }
