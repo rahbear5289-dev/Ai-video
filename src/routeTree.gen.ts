@@ -13,6 +13,22 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as DashboardAddAiModelRouteImport } from './routes/dashboard/add-ai-model'
+import { Route as DashboardAiCallingRouteImport } from './routes/dashboard/ai-calling'
+import { Route as DashboardAiChattingRouteImport } from './routes/dashboard/ai-chatting'
+import { Route as DashboardAnalyticsRouteImport } from './routes/dashboard/analytics'
+import { Route as DashboardAudienceRouteImport } from './routes/dashboard/audience'
+import { Route as DashboardGalleryRouteImport } from './routes/dashboard/gallery'
+import { Route as DashboardImageGeneratorRouteImport } from './routes/dashboard/image-generator'
+import { Route as DashboardLaunchesRouteImport } from './routes/dashboard/launches'
+import { Route as DashboardScheduleRouteImport } from './routes/dashboard/schedule'
+import { Route as DashboardScriptCreatorRouteImport } from './routes/dashboard/script-creator'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard/settings'
+import { Route as DashboardTokenRouteImport } from './routes/dashboard/token'
+import { Route as DashboardVideoCreatorRouteImport } from './routes/dashboard/video-creator'
+import { Route as DashboardVideoEditorRouteImport } from './routes/dashboard/video-editor'
+import { Route as DashboardVideoScriptScannerRouteImport } from './routes/dashboard/video-script-scanner'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,37 +50,225 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAddAiModelRoute = DashboardAddAiModelRouteImport.update({
+  id: '/add-ai-model',
+  path: '/add-ai-model',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAiCallingRoute = DashboardAiCallingRouteImport.update({
+  id: '/ai-calling',
+  path: '/ai-calling',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAiChattingRoute = DashboardAiChattingRouteImport.update({
+  id: '/ai-chatting',
+  path: '/ai-chatting',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAnalyticsRoute = DashboardAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAudienceRoute = DashboardAudienceRouteImport.update({
+  id: '/audience',
+  path: '/audience',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardGalleryRoute = DashboardGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardImageGeneratorRoute = DashboardImageGeneratorRouteImport.update({
+  id: '/image-generator',
+  path: '/image-generator',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardLaunchesRoute = DashboardLaunchesRouteImport.update({
+  id: '/launches',
+  path: '/launches',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardScheduleRoute = DashboardScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardScriptCreatorRoute = DashboardScriptCreatorRouteImport.update({
+  id: '/script-creator',
+  path: '/script-creator',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardTokenRoute = DashboardTokenRouteImport.update({
+  id: '/token',
+  path: '/token',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardVideoCreatorRoute = DashboardVideoCreatorRouteImport.update({
+  id: '/video-creator',
+  path: '/video-creator',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardVideoEditorRoute = DashboardVideoEditorRouteImport.update({
+  id: '/video-editor',
+  path: '/video-editor',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardVideoScriptScannerRoute =
+  DashboardVideoScriptScannerRouteImport.update({
+    id: '/video-script-scanner',
+    path: '/video-script-scanner',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/dashboard/add-ai-model': typeof DashboardAddAiModelRoute
+  '/dashboard/ai-calling': typeof DashboardAiCallingRoute
+  '/dashboard/ai-chatting': typeof DashboardAiChattingRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsRoute
+  '/dashboard/audience': typeof DashboardAudienceRoute
+  '/dashboard/gallery': typeof DashboardGalleryRoute
+  '/dashboard/image-generator': typeof DashboardImageGeneratorRoute
+  '/dashboard/launches': typeof DashboardLaunchesRoute
+  '/dashboard/schedule': typeof DashboardScheduleRoute
+  '/dashboard/script-creator': typeof DashboardScriptCreatorRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/token': typeof DashboardTokenRoute
+  '/dashboard/video-creator': typeof DashboardVideoCreatorRoute
+  '/dashboard/video-editor': typeof DashboardVideoEditorRoute
+  '/dashboard/video-script-scanner': typeof DashboardVideoScriptScannerRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/dashboard/add-ai-model': typeof DashboardAddAiModelRoute
+  '/dashboard/ai-calling': typeof DashboardAiCallingRoute
+  '/dashboard/ai-chatting': typeof DashboardAiChattingRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsRoute
+  '/dashboard/audience': typeof DashboardAudienceRoute
+  '/dashboard/gallery': typeof DashboardGalleryRoute
+  '/dashboard/image-generator': typeof DashboardImageGeneratorRoute
+  '/dashboard/launches': typeof DashboardLaunchesRoute
+  '/dashboard/schedule': typeof DashboardScheduleRoute
+  '/dashboard/script-creator': typeof DashboardScriptCreatorRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/token': typeof DashboardTokenRoute
+  '/dashboard/video-creator': typeof DashboardVideoCreatorRoute
+  '/dashboard/video-editor': typeof DashboardVideoEditorRoute
+  '/dashboard/video-script-scanner': typeof DashboardVideoScriptScannerRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/dashboard/add-ai-model': typeof DashboardAddAiModelRoute
+  '/dashboard/ai-calling': typeof DashboardAiCallingRoute
+  '/dashboard/ai-chatting': typeof DashboardAiChattingRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsRoute
+  '/dashboard/audience': typeof DashboardAudienceRoute
+  '/dashboard/gallery': typeof DashboardGalleryRoute
+  '/dashboard/image-generator': typeof DashboardImageGeneratorRoute
+  '/dashboard/launches': typeof DashboardLaunchesRoute
+  '/dashboard/schedule': typeof DashboardScheduleRoute
+  '/dashboard/script-creator': typeof DashboardScriptCreatorRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/token': typeof DashboardTokenRoute
+  '/dashboard/video-creator': typeof DashboardVideoCreatorRoute
+  '/dashboard/video-editor': typeof DashboardVideoEditorRoute
+  '/dashboard/video-script-scanner': typeof DashboardVideoScriptScannerRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/signin' | '/signup'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/signin'
+    | '/signup'
+    | '/dashboard/add-ai-model'
+    | '/dashboard/ai-calling'
+    | '/dashboard/ai-chatting'
+    | '/dashboard/analytics'
+    | '/dashboard/audience'
+    | '/dashboard/gallery'
+    | '/dashboard/image-generator'
+    | '/dashboard/launches'
+    | '/dashboard/schedule'
+    | '/dashboard/script-creator'
+    | '/dashboard/settings'
+    | '/dashboard/token'
+    | '/dashboard/video-creator'
+    | '/dashboard/video-editor'
+    | '/dashboard/video-script-scanner'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/signin' | '/signup'
-  id: '__root__' | '/' | '/dashboard' | '/signin' | '/signup'
+  to:
+    | '/'
+    | '/signin'
+    | '/signup'
+    | '/dashboard/add-ai-model'
+    | '/dashboard/ai-calling'
+    | '/dashboard/ai-chatting'
+    | '/dashboard/analytics'
+    | '/dashboard/audience'
+    | '/dashboard/gallery'
+    | '/dashboard/image-generator'
+    | '/dashboard/launches'
+    | '/dashboard/schedule'
+    | '/dashboard/script-creator'
+    | '/dashboard/settings'
+    | '/dashboard/token'
+    | '/dashboard/video-creator'
+    | '/dashboard/video-editor'
+    | '/dashboard/video-script-scanner'
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/signin'
+    | '/signup'
+    | '/dashboard/add-ai-model'
+    | '/dashboard/ai-calling'
+    | '/dashboard/ai-chatting'
+    | '/dashboard/analytics'
+    | '/dashboard/audience'
+    | '/dashboard/gallery'
+    | '/dashboard/image-generator'
+    | '/dashboard/launches'
+    | '/dashboard/schedule'
+    | '/dashboard/script-creator'
+    | '/dashboard/settings'
+    | '/dashboard/token'
+    | '/dashboard/video-creator'
+    | '/dashboard/video-editor'
+    | '/dashboard/video-script-scanner'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
 }
@@ -99,12 +303,166 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/add-ai-model': {
+      id: '/dashboard/add-ai-model'
+      path: '/add-ai-model'
+      fullPath: '/dashboard/add-ai-model'
+      preLoaderRoute: typeof DashboardAddAiModelRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/ai-calling': {
+      id: '/dashboard/ai-calling'
+      path: '/ai-calling'
+      fullPath: '/dashboard/ai-calling'
+      preLoaderRoute: typeof DashboardAiCallingRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/ai-chatting': {
+      id: '/dashboard/ai-chatting'
+      path: '/ai-chatting'
+      fullPath: '/dashboard/ai-chatting'
+      preLoaderRoute: typeof DashboardAiChattingRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/analytics': {
+      id: '/dashboard/analytics'
+      path: '/analytics'
+      fullPath: '/dashboard/analytics'
+      preLoaderRoute: typeof DashboardAnalyticsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/audience': {
+      id: '/dashboard/audience'
+      path: '/audience'
+      fullPath: '/dashboard/audience'
+      preLoaderRoute: typeof DashboardAudienceRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/gallery': {
+      id: '/dashboard/gallery'
+      path: '/gallery'
+      fullPath: '/dashboard/gallery'
+      preLoaderRoute: typeof DashboardGalleryRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/image-generator': {
+      id: '/dashboard/image-generator'
+      path: '/image-generator'
+      fullPath: '/dashboard/image-generator'
+      preLoaderRoute: typeof DashboardImageGeneratorRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/launches': {
+      id: '/dashboard/launches'
+      path: '/launches'
+      fullPath: '/dashboard/launches'
+      preLoaderRoute: typeof DashboardLaunchesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/schedule': {
+      id: '/dashboard/schedule'
+      path: '/schedule'
+      fullPath: '/dashboard/schedule'
+      preLoaderRoute: typeof DashboardScheduleRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/script-creator': {
+      id: '/dashboard/script-creator'
+      path: '/script-creator'
+      fullPath: '/dashboard/script-creator'
+      preLoaderRoute: typeof DashboardScriptCreatorRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/token': {
+      id: '/dashboard/token'
+      path: '/token'
+      fullPath: '/dashboard/token'
+      preLoaderRoute: typeof DashboardTokenRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/video-creator': {
+      id: '/dashboard/video-creator'
+      path: '/video-creator'
+      fullPath: '/dashboard/video-creator'
+      preLoaderRoute: typeof DashboardVideoCreatorRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/video-editor': {
+      id: '/dashboard/video-editor'
+      path: '/video-editor'
+      fullPath: '/dashboard/video-editor'
+      preLoaderRoute: typeof DashboardVideoEditorRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/video-script-scanner': {
+      id: '/dashboard/video-script-scanner'
+      path: '/video-script-scanner'
+      fullPath: '/dashboard/video-script-scanner'
+      preLoaderRoute: typeof DashboardVideoScriptScannerRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardAddAiModelRoute: typeof DashboardAddAiModelRoute
+  DashboardAiCallingRoute: typeof DashboardAiCallingRoute
+  DashboardAiChattingRoute: typeof DashboardAiChattingRoute
+  DashboardAnalyticsRoute: typeof DashboardAnalyticsRoute
+  DashboardAudienceRoute: typeof DashboardAudienceRoute
+  DashboardGalleryRoute: typeof DashboardGalleryRoute
+  DashboardImageGeneratorRoute: typeof DashboardImageGeneratorRoute
+  DashboardLaunchesRoute: typeof DashboardLaunchesRoute
+  DashboardScheduleRoute: typeof DashboardScheduleRoute
+  DashboardScriptCreatorRoute: typeof DashboardScriptCreatorRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardTokenRoute: typeof DashboardTokenRoute
+  DashboardVideoCreatorRoute: typeof DashboardVideoCreatorRoute
+  DashboardVideoEditorRoute: typeof DashboardVideoEditorRoute
+  DashboardVideoScriptScannerRoute: typeof DashboardVideoScriptScannerRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAddAiModelRoute: DashboardAddAiModelRoute,
+  DashboardAiCallingRoute: DashboardAiCallingRoute,
+  DashboardAiChattingRoute: DashboardAiChattingRoute,
+  DashboardAnalyticsRoute: DashboardAnalyticsRoute,
+  DashboardAudienceRoute: DashboardAudienceRoute,
+  DashboardGalleryRoute: DashboardGalleryRoute,
+  DashboardImageGeneratorRoute: DashboardImageGeneratorRoute,
+  DashboardLaunchesRoute: DashboardLaunchesRoute,
+  DashboardScheduleRoute: DashboardScheduleRoute,
+  DashboardScriptCreatorRoute: DashboardScriptCreatorRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardTokenRoute: DashboardTokenRoute,
+  DashboardVideoCreatorRoute: DashboardVideoCreatorRoute,
+  DashboardVideoEditorRoute: DashboardVideoEditorRoute,
+  DashboardVideoScriptScannerRoute: DashboardVideoScriptScannerRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
 }

@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   BarChart3,
@@ -6,13 +6,24 @@ import {
   ChevronLeft,
   ChevronRight,
   Clock,
-  Home,
+  FileText,
+  Image as ImageIcon,
+  LayoutGrid,
   LayoutDashboard,
   LogOut,
+  MessageSquare,
+  Phone,
   Plus,
   Rocket,
+  ScanLine,
   Settings,
+  Settings as SettingsIcon,
+  Sparkles,
+  User,
   Users,
+  Video,
+  Video as Video2,
+  Zap,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
@@ -37,20 +48,29 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 const navItems = [
-  { label: "Overview", icon: LayoutDashboard, href: "/dashboard" },
-  { label: "Launches", icon: Rocket, href: "/dashboard/launches" },
-  { label: "Analytics", icon: BarChart3, href: "/dashboard/analytics" },
-  { label: "Audience", icon: Users, href: "/dashboard/audience" },
-  { label: "Schedule", icon: Calendar, href: "/dashboard/schedule" },
-  { label: "Settings", icon: Settings, href: "/dashboard/settings" },
+  { label: "Overview", icon: LayoutDashboard, to: "/dashboard" },
+  { label: "Launches", icon: Rocket, to: "/dashboard/launches" },
+  { label: "Analytics", icon: BarChart3, to: "/dashboard/analytics" },
+  { label: "Audience", icon: Users, to: "/dashboard/audience" },
+  { label: "Schedule", icon: Calendar, to: "/dashboard/schedule" },
+  { label: "Video Creator", icon: Video, to: "/dashboard/video-creator" },
+  { label: "Video Editor", icon: Video2, to: "/dashboard/video-editor" },
+  { label: "Script Creator", icon: FileText, to: "/dashboard/script-creator" },
+  { label: "Add AI Model", icon: Sparkles, to: "/dashboard/add-ai-model" },
+  { label: "Image Generator", icon: ImageIcon, to: "/dashboard/image-generator" },
+  { label: "AI Calling", icon: Phone, to: "/dashboard/ai-calling" },
+  { label: "AI Chatting", icon: MessageSquare, to: "/dashboard/ai-chatting" },
+  { label: "Script Scanner", icon: ScanLine, to: "/dashboard/video-script-scanner" },
+  { label: "Gallery", icon: LayoutGrid, to: "/dashboard/gallery" },
+  { label: "Token", icon: Zap, to: "/dashboard/token" },
 ];
 
-function DashboardLayout({ children }: { children?: React.ReactNode }) {
+function DashboardLayout() {
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState("Overview");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -62,6 +82,8 @@ function DashboardLayout({ children }: { children?: React.ReactNode }) {
     await signOut();
     navigate({ to: "/", replace: true });
   };
+
+  const isActive = (path: string) => location.pathname === path;
 
   if (loading) {
     return (
@@ -104,25 +126,21 @@ function DashboardLayout({ children }: { children?: React.ReactNode }) {
         </div>
 
         <nav className="flex-1 space-y-1 px-3 py-4">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeTab === item.label;
-            return (
-              <button
-                key={item.label}
-                onClick={() => setActiveTab(item.label)}
-                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-                  isActive
-                    ? "bg-ink text-paper shadow-lg shadow-ink/20"
-                    : "text-mute hover:bg-black/5 hover:text-ink"
-                }`}
-                title={!sidebarOpen ? item.label : undefined}
-              >
-                <Icon size={18} className="shrink-0" />
-                {sidebarOpen && <span>{item.label}</span>}
-              </button>
-            );
-          })}
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+                isActive(item.to)
+                  ? "bg-ink text-paper shadow-lg shadow-ink/20"
+                  : "text-mute hover:bg-black/5 hover:text-ink"
+              }`}
+              viewTransition
+            >
+              <item.icon size={18} className="shrink-0" />
+              {sidebarOpen && <span>{item.label}</span>}
+            </Link>
+          ))}
         </nav>
 
         <div className="border-t border-black/5 p-3">
@@ -155,29 +173,22 @@ function DashboardLayout({ children }: { children?: React.ReactNode }) {
                 <ChevronRight size={18} />
               </button>
             </div>
-            <nav className="space-y-1 p-3">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = activeTab === item.label;
-                return (
-                  <button
-                    key={item.label}
-                    onClick={() => {
-                      setActiveTab(item.label);
-                      setMobileSidebarOpen(false);
-                    }}
-                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
-                      isActive
-                        ? "bg-ink text-paper"
-                        : "text-mute hover:bg-black/5 hover:text-ink"
-                    }`}
-                  >
-                    <Icon size={18} />
-                    {item.label}
-                  </button>
-                );
-              })}
-            </nav>
+                <nav className="space-y-1 p-3">
+                  {navItems.map(({ icon: Icon, label, to }) => (
+                    <Link
+                      key={label}
+                      to={to}
+                      onClick={() => setMobileSidebarOpen(false)}
+                      className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
+                        isActive(to) ? "bg-ink text-paper" : "text-mute hover:bg-black/5 hover:text-ink"
+                      }`}
+                      viewTransition
+                    >
+                      <Icon size={18} />
+                      {label}
+                    </Link>
+                  ))}
+                </nav>
             <div className="border-t border-black/5 p-3">
               <button
                 onClick={() => {
@@ -211,7 +222,7 @@ function DashboardLayout({ children }: { children?: React.ReactNode }) {
           <div className="hidden items-center gap-2 text-sm text-mute md:flex">
             <span>Dashboard</span>
             <ChevronRight size={14} />
-            <span className="text-ink font-medium">{activeTab}</span>
+            <span className="text-ink font-medium">{navItems.find(n => isActive(n.to))?.label ?? "Overview"}</span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -234,7 +245,9 @@ function DashboardLayout({ children }: { children?: React.ReactNode }) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-6">
+          <Outlet />
+        </main>
       </div>
     </div>
   );
