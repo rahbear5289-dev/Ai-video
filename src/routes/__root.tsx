@@ -7,7 +7,11 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import { TRPCProvider } from "@/trpc/client";
+import type { AppRouter } from "@/trpc/routers/_app";
+import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -15,6 +19,7 @@ import { AuthProvider } from "@/lib/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { MouseFollower } from "@/components/mouse-follower";
 import { supabase } from "@/integrations/supabase/client";
+
 
 function loadTidioScript() {
   if (document.querySelector('script[src*="tidio.co"]')) return;
@@ -138,7 +143,27 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
   const router = useRouter();
+
+  const [trpcClient] = useState(() =>
+    createTRPCClient<AppRouter>({
+      links: [
+        httpBatchLink({
+          url: typeof window !== "undefined" ? "/api/trpc" : `${process.env["NEXT_PUBLIC_APP_URL"] || "http://localhost:3000"}/api/trpc`,
+          headers: async () => {
+            try {
+              const { data } = await supabase.auth.getSession();
+              const token = data.session?.access_token;
+              return token ? { authorization: `Bearer ${token}` } : {};
+            } catch {
+              return {};
+            }
+          },
+        }),
+      ],
+    }),
+  );
 
   useEffect(() => {
     const {
@@ -153,12 +178,17 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <MouseFollower />
-        <Toaster position="top-center" richColors />
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-      </AuthProvider>
+      <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
+        <NuqsAdapter>
+          <AuthProvider>
+            <MouseFollower />
+            <Toaster position="top-center" richColors />
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </AuthProvider>
+        </NuqsAdapter>
+      </TRPCProvider>
     </QueryClientProvider>
   );
 }
+

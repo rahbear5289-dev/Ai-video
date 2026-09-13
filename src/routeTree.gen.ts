@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as CallMeetingIdRouteImport } from './routes/call/$meetingId'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardAddAiModelRouteImport } from './routes/dashboard/add-ai-model'
 import { Route as DashboardAiCallingRouteImport } from './routes/dashboard/ai-calling'
@@ -48,6 +49,11 @@ const SigninRoute = SigninRouteImport.update({
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CallMeetingIdRoute = CallMeetingIdRouteImport.update({
+  id: '/call/$meetingId',
+  path: '/call/$meetingId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/call/$meetingId': typeof CallMeetingIdRoute
   '/dashboard/add-ai-model': typeof DashboardAddAiModelRoute
   '/dashboard/ai-calling': typeof DashboardAiCallingRoute
   '/dashboard/ai-chatting': typeof DashboardAiChattingRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/call/$meetingId': typeof CallMeetingIdRoute
   '/dashboard/add-ai-model': typeof DashboardAddAiModelRoute
   '/dashboard/ai-calling': typeof DashboardAiCallingRoute
   '/dashboard/ai-chatting': typeof DashboardAiChattingRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/call/$meetingId': typeof CallMeetingIdRoute
   '/dashboard/add-ai-model': typeof DashboardAddAiModelRoute
   '/dashboard/ai-calling': typeof DashboardAiCallingRoute
   '/dashboard/ai-chatting': typeof DashboardAiChattingRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/signin'
     | '/signup'
+    | '/call/$meetingId'
     | '/dashboard/add-ai-model'
     | '/dashboard/ai-calling'
     | '/dashboard/ai-chatting'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
     | '/'
     | '/signin'
     | '/signup'
+    | '/call/$meetingId'
     | '/dashboard/add-ai-model'
     | '/dashboard/ai-calling'
     | '/dashboard/ai-chatting'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/signin'
     | '/signup'
+    | '/call/$meetingId'
     | '/dashboard/add-ai-model'
     | '/dashboard/ai-calling'
     | '/dashboard/ai-chatting'
@@ -271,6 +283,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRouteWithChildren
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
+  CallMeetingIdRoute: typeof CallMeetingIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -301,6 +314,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/call/$meetingId': {
+      id: '/call/$meetingId'
+      path: '/call/$meetingId'
+      fullPath: '/call/$meetingId'
+      preLoaderRoute: typeof CallMeetingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/': {
@@ -465,6 +485,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRouteWithChildren,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
+  CallMeetingIdRoute: CallMeetingIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

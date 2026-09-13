@@ -47,6 +47,40 @@ function isH3SwallowedErrorBody(body: string): boolean {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const url = new URL(request.url);
+
+      // Handle tRPC API calls
+      if (url.pathname.startsWith("/api/trpc")) {
+        const { fetchRequestHandler } = await import("@trpc/server/adapters/fetch");
+        const { appRouter } = await import("./trpc/routers/_app");
+        const { createTRPCContext } = await import("./trpc/init");
+
+        return await fetchRequestHandler({
+          endpoint: "/api/trpc",
+          req: request,
+          router: appRouter,
+          createContext: () => createTRPCContext(request),
+        });
+      }
+
+      // Handle Stream Webhook
+      if (url.pathname === "/api/webhook") {
+        const { handleWebhookRequest } = await import("./server/webhook");
+        return await handleWebhookRequest(request);
+      }
+
+      // Handle Inngest API
+      if (url.pathname.startsWith("/api/inngest")) {
+        const { serve } = await import("inngest/edge");
+        const { inngest } = await import("./inngest/client");
+        const { meetingsProcessing } = await import("./inngest/functions");
+        const handler = serve({
+          client: inngest,
+          functions: [meetingsProcessing],
+        });
+        return await handler(request);
+      }
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
