@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronRightIcon, TrashIcon, PencilIcon, MoreVerticalIcon } from "lucide-react";
+import { ChevronRightIcon, TrashIcon, PencilIcon, MoreVerticalIcon, ArrowLeftIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,13 +21,15 @@ interface Props {
   meetingName: string;
   onEdit: () => void;
   onRemove: () => void;
+  onBack?: () => void;
 }
 
 export const MeetingIdViewHeader = ({
   meetingId,
   meetingName,
   onEdit,
-  onRemove
+  onRemove,
+  onBack,
 }: Props) => {
   return (
     <div className="flex items-center justify-between">
@@ -35,9 +37,19 @@ export const MeetingIdViewHeader = ({
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild className="font-medium text-xl">
-              <Link to="/dashboard/ai-calling">
-                My Meetings
-              </Link>
+              {onBack ? (
+                <button
+                  onClick={onBack}
+                  className="flex items-center gap-1 hover:text-foreground transition-colors"
+                >
+                  <ArrowLeftIcon className="size-4" />
+                  My Meetings
+                </button>
+              ) : (
+                <Link to="/dashboard/ai-calling">
+                  My Meetings
+                </Link>
+              )}
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator className="text-foreground text-xl font-medium [&>svg]:size-4">

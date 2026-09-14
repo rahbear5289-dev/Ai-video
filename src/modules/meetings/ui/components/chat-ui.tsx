@@ -37,7 +37,9 @@ export const ChatUI = ({
   );
 
   const [channel, setChannel] = useState<StreamChannel>();
-  const chatApiKey = (import.meta.env["VITE_STREAM_CHAT_API_KEY"] || "") as string;
+  const chatApiKey = (import.meta.env["VITE_STREAM_CHAT_API_KEY"] ||
+    import.meta.env["NEXT_PUBLIC_STREAM_CHAT_API_KEY"] ||
+    "ccpu3pjc57g2") as string;
   const client = useCreateChatClient({
     apiKey: chatApiKey,
     tokenOrProvider: generateChatToken,

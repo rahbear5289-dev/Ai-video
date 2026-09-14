@@ -36,7 +36,9 @@ export const CallConnect = ({
 
   const [client, setClient] = useState<StreamVideoClient>();
   useEffect(() => {
-    const streamApiKey = (import.meta.env["VITE_STREAM_VIDEO_API_KEY"] || "") as string;
+    const streamApiKey = (import.meta.env["VITE_STREAM_VIDEO_API_KEY"] ||
+      import.meta.env["NEXT_PUBLIC_STREAM_VIDEO_API_KEY"] ||
+      "ccpu3pjc57g2") as string;
     const _client = new StreamVideoClient({
       apiKey: streamApiKey,
       user: {
@@ -84,7 +86,7 @@ export const CallConnect = ({
   return (
     <StreamVideo client={client}>
       <StreamCall call={call}>
-        <CallUI meetingName={meetingName} />
+        <CallUI meetingId={meetingId} meetingName={meetingName} />
       </StreamCall>
     </StreamVideo>
   );

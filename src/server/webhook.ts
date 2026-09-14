@@ -1,3 +1,4 @@
+import "dotenv/config";
 import OpenAI from "openai";
 import { and, eq, not } from "drizzle-orm";
 import type { ChatCompletionMessageParam } from "openai/resources/index.mjs";

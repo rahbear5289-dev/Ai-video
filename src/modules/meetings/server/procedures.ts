@@ -143,6 +143,70 @@ export const meetingsRouter = createTRPCRouter({
 
     return token;
   }),
+  startAiAgent: protectedProcedure
+    .input(z.object({ meetingId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const [existingMeeting] = await db
+        .select()
+        .from(meetings)
+        .where(
+          and(
+            eq(meetings.id, input.meetingId),
+            eq(meetings.userId, ctx.auth.user.id),
+          ),
+        );
+
+      if (!existingMeeting) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Meeting not found",
+        });
+      }
+
+      await db
+        .update(meetings)
+        .set({
+          status: "active",
+          startedAt: new Date(),
+        })
+        .where(eq(meetings.id, existingMeeting.id));
+
+      const [existingAgent] = await db
+        .select()
+        .from(agents)
+        .where(eq(agents.id, existingMeeting.agentId));
+
+      if (!existingAgent) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Agent not found",
+        });
+      }
+
+      const openAiApiKey = process.env["OPENAI_API_KEY"];
+      if (!openAiApiKey) {
+        console.warn("[startAiAgent] OPENAI_API_KEY not set");
+        return { success: false, error: "OPENAI_API_KEY not set" };
+      }
+
+      try {
+        const call = streamVideo.video.call("default", input.meetingId);
+        const realtimeClient = await streamVideo.video.connectOpenAi({
+          call,
+          openAiApiKey,
+          agentUserId: existingAgent.id,
+        });
+
+        realtimeClient.updateSession({
+          instructions: existingAgent.instructions,
+        });
+
+        return { success: true };
+      } catch (err: any) {
+        console.warn("[startAiAgent] connectOpenAi note:", err?.message || err);
+        return { success: false, error: err?.message };
+      }
+    }),
   remove: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {

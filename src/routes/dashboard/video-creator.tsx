@@ -24,9 +24,9 @@ function VideoCreator() {
 
       <div className="grid gap-5 md:grid-cols-3">
         {[
-          { title: "Templates", desc: "Choose from 200+ templates", icon: "📋" },
-          { title: "Upload", desc: "Upload your own footage", icon: "📤" },
-          { title: "AI Generate", desc: "Let AI create for you", icon: "🤖" },
+          { title: "Short Generator", desc: "Create viral short-form videos", icon: "⚡" },
+          { title: "Video Generator", desc: "Generate full-length videos", icon: "🎬" },
+          { title: "Ads Generator", desc: "Create high-converting ad videos", icon: "📊" },
         ].map((item, i) => (
           <div
             key={item.title}
